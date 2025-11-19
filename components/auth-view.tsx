@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Wallet, AlertCircle } from 'lucide-react'
+import { Wallet, AlertCircle, TrendingUp, PieChart, Bell, ShieldCheck } from 'lucide-react'
 import { useAuthStore } from "@/lib/auth-store"
 
 export function AuthView() {
@@ -36,9 +36,9 @@ export function AuthView() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
       {/* Background image with overlay */}
-      <div className="absolute inset-0 z-0">
+      <div className="fixed inset-0 z-0">
         <img
           src="/modern-financial-dashboard-with-charts-and-graphs-.jpg"
           alt=""
@@ -48,19 +48,19 @@ export function AuthView() {
       </div>
 
       {/* Floating elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+      <div className="fixed top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-md">
+      <div className="relative z-10 w-full max-w-md my-8">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-4 shadow-lg shadow-primary/20">
             <Wallet className="w-8 h-8 text-primary-foreground" />
           </div>
           <h1 className="text-4xl font-bold text-balance mb-2">BudgetWise</h1>
-          <p className="text-muted-foreground">Smart Money Management for Everyone</p>
+          <p className="text-muted-foreground text-lg">Smart Money Management for Everyone</p>
         </div>
 
-        <Card className="border-2 shadow-xl">
+        <Card className="border-2 shadow-xl bg-card/80 backdrop-blur-md">
           <CardHeader>
             <CardTitle className="text-2xl">Welcome</CardTitle>
             <CardDescription>Sign in to your account or create a new one</CardDescription>
@@ -158,9 +158,43 @@ export function AuthView() {
           </CardContent>
         </Card>
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
+        <p className="text-center text-sm text-muted-foreground mt-6 mb-12">
           Your data is stored securely on your device. We prioritize your privacy.
         </p>
+      </div>
+
+      <div className="relative z-10 w-full max-w-5xl grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 px-4">
+        <div className="bg-card/40 backdrop-blur-md p-6 rounded-xl border border-border/50 hover:bg-card/60 transition-colors">
+          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+            <TrendingUp className="w-6 h-6 text-primary" />
+          </div>
+          <h3 className="font-semibold text-lg mb-2">Track Income & Expenses</h3>
+          <p className="text-muted-foreground text-sm">Easily log your recurring and one-time transactions to see exactly where your money goes.</p>
+        </div>
+
+        <div className="bg-card/40 backdrop-blur-md p-6 rounded-xl border border-border/50 hover:bg-card/60 transition-colors">
+          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+            <PieChart className="w-6 h-6 text-primary" />
+          </div>
+          <h3 className="font-semibold text-lg mb-2">Visual Analytics</h3>
+          <p className="text-muted-foreground text-sm">Understand your spending habits with beautiful, interactive charts and detailed reports.</p>
+        </div>
+
+        <div className="bg-card/40 backdrop-blur-md p-6 rounded-xl border border-border/50 hover:bg-card/60 transition-colors">
+          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+            <Bell className="w-6 h-6 text-primary" />
+          </div>
+          <h3 className="font-semibold text-lg mb-2">Smart Alerts</h3>
+          <p className="text-muted-foreground text-sm">Set monthly budgets and receive instant notifications when you're nearing your limits.</p>
+        </div>
+
+        <div className="bg-card/40 backdrop-blur-md p-6 rounded-xl border border-border/50 hover:bg-card/60 transition-colors">
+          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+            <ShieldCheck className="w-6 h-6 text-primary" />
+          </div>
+          <h3 className="font-semibold text-lg mb-2">Private & Secure</h3>
+          <p className="text-muted-foreground text-sm">Your financial data stays on your device. We use local storage for maximum privacy and offline access.</p>
+        </div>
       </div>
     </div>
   )
