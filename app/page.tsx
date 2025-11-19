@@ -8,15 +8,20 @@ import { BudgetsView } from "@/components/budgets-view"
 import { SavingsView } from "@/components/savings-view"
 import { ReportsView } from "@/components/reports-view"
 import { AuthView } from "@/components/auth-view"
+import { SettingsView } from "@/components/settings-view"
+import { AIInsightsView } from "@/components/ai-insights-view"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Wallet, TrendingUp, CreditCard, Target, PieChart, DollarSign, LogOut } from 'lucide-react'
+import { Wallet, TrendingUp, CreditCard, Target, PieChart, DollarSign, LogOut, Settings, Brain } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useAuthStore } from "@/lib/auth-store"
+import { useBudgetStore } from "@/lib/store"
+import { getTranslation } from "@/lib/i18n"
 import { ModeToggle } from "@/components/mode-toggle"
 
 export default function BudgetApp() {
   const [activeTab, setActiveTab] = useState("dashboard")
   const { isAuthenticated, user, logout } = useAuthStore()
+  const { locale } = useBudgetStore()
 
   if (!isAuthenticated) {
     return <AuthView />
@@ -62,30 +67,38 @@ export default function BudgetApp() {
 
         <main className="container mx-auto px-4 py-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 gap-2 h-auto p-1 bg-muted/50">
+            <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 gap-2 h-auto p-1 bg-muted/50">
               <TabsTrigger value="dashboard" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <DollarSign className="w-4 h-4" />
-                <span className="hidden sm:inline">Dashboard</span>
+                <span className="hidden sm:inline">{getTranslation(locale, 'dashboard')}</span>
               </TabsTrigger>
               <TabsTrigger value="income" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <TrendingUp className="w-4 h-4" />
-                <span className="hidden sm:inline">Income</span>
+                <span className="hidden sm:inline">{getTranslation(locale, 'income')}</span>
               </TabsTrigger>
               <TabsTrigger value="expenses" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <CreditCard className="w-4 h-4" />
-                <span className="hidden sm:inline">Expenses</span>
+                <span className="hidden sm:inline">{getTranslation(locale, 'expenses')}</span>
               </TabsTrigger>
               <TabsTrigger value="budgets" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <Wallet className="w-4 h-4" />
-                <span className="hidden sm:inline">Budgets</span>
+                <span className="hidden sm:inline">{getTranslation(locale, 'budgets')}</span>
               </TabsTrigger>
               <TabsTrigger value="savings" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <Target className="w-4 h-4" />
-                <span className="hidden sm:inline">Savings</span>
+                <span className="hidden sm:inline">{getTranslation(locale, 'savings')}</span>
               </TabsTrigger>
               <TabsTrigger value="reports" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <PieChart className="w-4 h-4" />
-                <span className="hidden sm:inline">Reports</span>
+                <span className="hidden sm:inline">{getTranslation(locale, 'reports')}</span>
+              </TabsTrigger>
+              <TabsTrigger value="insights" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <Brain className="w-4 h-4" />
+                <span className="hidden sm:inline">{getTranslation(locale, 'insights')}</span>
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <Settings className="w-4 h-4" />
+                <span className="hidden sm:inline">{getTranslation(locale, 'settings')}</span>
               </TabsTrigger>
             </TabsList>
 
@@ -111,6 +124,14 @@ export default function BudgetApp() {
 
             <TabsContent value="reports" className="space-y-6">
               <ReportsView />
+            </TabsContent>
+
+            <TabsContent value="insights" className="space-y-6">
+              <AIInsightsView />
+            </TabsContent>
+
+            <TabsContent value="settings" className="space-y-6">
+              <SettingsView />
             </TabsContent>
           </Tabs>
         </main>

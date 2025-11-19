@@ -1,19 +1,24 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, TrendingDown, Wallet, Target, AlertCircle } from 'lucide-react'
+import { TrendingUp, TrendingDown, Wallet, Target, AlertCircle, Brain } from 'lucide-react'
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Progress } from "@/components/ui/progress"
 import { useBudgetStore } from "@/lib/store"
 import { SpendingChart } from "@/components/spending-chart"
 import { BudgetOverviewChart } from "@/components/budget-overview-chart"
+import { formatCurrency } from "@/lib/utils"
+import { getTranslation } from "@/lib/i18n"
+import { useEffect } from "react"
 
 export function DashboardView() {
-  const { income, expenses, budgets, savingsGoals } = useBudgetStore()
+  const { income, expenses, budgets, savingsGoals, locale, currency, insights, generateInsights } = useBudgetStore()
+
+  useEffect(() => {
+    generateInsights()
+  }, [generateInsights])
 
   const totalIncome = income.reduce((sum, item) => sum + item.amount, 0)
   const totalExpenses = expenses.reduce((sum, item) => sum + item.amount, 0)
-  const totalBudget = budgets.reduce((sum, item) => sum + item.limit, 0)
   const totalSavings = savingsGoals.reduce((sum, goal) => sum + goal.current, 0)
   const balance = totalIncome - totalExpenses
 
@@ -24,18 +29,29 @@ export function DashboardView() {
     return spent >= budget.limit * 0.9
   })
 
+  const topInsight = insights[0]
+
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-balance">Financial Overview</h2>
-        <p className="text-muted-foreground">Track your income, expenses, and savings at a glance</p>
+        <h2 className="text-3xl font-bold text-balance">{getTranslation(locale, 'financialOverview')}</h2>
+        <p className="text-muted-foreground">{getTranslation(locale, 'trackFinances')}</p>
       </div>
+
+      {topInsight && (
+        <Alert className="border-primary bg-primary/5">
+          <Brain className="h-4 w-4 text-primary" />
+          <AlertDescription className="text-primary-foreground/90">
+            <strong>AI Insight:</strong> {topInsight.description}
+          </AlertDescription>
+        </Alert>
+      )}
 
       {budgetAlerts.length > 0 && (
         <Alert className="border-warning bg-warning/10">
           <AlertCircle className="h-4 w-4 text-warning-foreground" />
           <AlertDescription className="text-warning-foreground">
-            <strong>Budget Alert:</strong> You're approaching or exceeding limits in {budgetAlerts.length} {budgetAlerts.length === 1 ? 'category' : 'categories'}
+            <strong>{getTranslation(locale, 'budgetAlert')}:</strong> {getTranslation(locale, 'approachingLimit')} {budgetAlerts.length} {budgetAlerts.length === 1 ? getTranslation(locale, 'category') : getTranslation(locale, 'categories')}
           </AlertDescription>
         </Alert>
       )}
@@ -50,12 +66,12 @@ export function DashboardView() {
             />
           </div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium">Total Income</CardTitle>
+            <CardTitle className="text-sm font-medium">{getTranslation(locale, 'totalIncome')}</CardTitle>
             <TrendingUp className="h-4 w-4 text-success" />
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-2xl font-bold">${totalIncome.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">This month</p>
+            <div className="text-2xl font-bold">{formatCurrency(totalIncome, currency, locale)}</div>
+            <p className="text-xs text-muted-foreground">{getTranslation(locale, 'thisMonth')}</p>
           </CardContent>
         </Card>
 
@@ -68,12 +84,12 @@ export function DashboardView() {
             />
           </div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
+            <CardTitle className="text-sm font-medium">{getTranslation(locale, 'totalExpenses')}</CardTitle>
             <TrendingDown className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-2xl font-bold">${totalExpenses.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">This month</p>
+            <div className="text-2xl font-bold">{formatCurrency(totalExpenses, currency, locale)}</div>
+            <p className="text-xs text-muted-foreground">{getTranslation(locale, 'thisMonth')}</p>
           </CardContent>
         </Card>
 
@@ -86,14 +102,14 @@ export function DashboardView() {
             />
           </div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium">Balance</CardTitle>
+            <CardTitle className="text-sm font-medium">{getTranslation(locale, 'balance')}</CardTitle>
             <Wallet className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent className="relative z-10">
             <div className={`text-2xl font-bold ${balance >= 0 ? 'text-success' : 'text-destructive'}`}>
-              ${balance.toFixed(2)}
+              {formatCurrency(balance, currency, locale)}
             </div>
-            <p className="text-xs text-muted-foreground">Available funds</p>
+            <p className="text-xs text-muted-foreground">{getTranslation(locale, 'availableFunds')}</p>
           </CardContent>
         </Card>
 
@@ -106,12 +122,12 @@ export function DashboardView() {
             />
           </div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium">Total Savings</CardTitle>
+            <CardTitle className="text-sm font-medium">{getTranslation(locale, 'totalSavings')}</CardTitle>
             <Target className="h-4 w-4 text-accent" />
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-2xl font-bold">${totalSavings.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">{savingsGoals.length} active goals</p>
+            <div className="text-2xl font-bold">{formatCurrency(totalSavings, currency, locale)}</div>
+            <p className="text-xs text-muted-foreground">{savingsGoals.length} {getTranslation(locale, 'activeGoals')}</p>
           </CardContent>
         </Card>
       </div>
@@ -119,8 +135,8 @@ export function DashboardView() {
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Spending by Category</CardTitle>
-            <CardDescription>Your expense distribution this month</CardDescription>
+            <CardTitle>{getTranslation(locale, 'spendingByCategory')}</CardTitle>
+            <CardDescription>{getTranslation(locale, 'expenseDistribution')}</CardDescription>
           </CardHeader>
           <CardContent>
             <SpendingChart />
@@ -129,8 +145,8 @@ export function DashboardView() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Budget Overview</CardTitle>
-            <CardDescription>Track your spending against budgets</CardDescription>
+            <CardTitle>{getTranslation(locale, 'budgetOverview')}</CardTitle>
+            <CardDescription>{getTranslation(locale, 'trackSpending')}</CardDescription>
           </CardHeader>
           <CardContent>
             <BudgetOverviewChart />
@@ -140,8 +156,8 @@ export function DashboardView() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Recent Transactions</CardTitle>
-          <CardDescription>Your latest expenses</CardDescription>
+          <CardTitle>{getTranslation(locale, 'recentTransactions')}</CardTitle>
+          <CardDescription>{getTranslation(locale, 'latestExpenses')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -157,13 +173,13 @@ export function DashboardView() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-destructive">-${expense.amount.toFixed(2)}</p>
-                  <p className="text-xs text-muted-foreground">{new Date(expense.date).toLocaleDateString()}</p>
+                  <p className="font-semibold text-destructive">-{formatCurrency(expense.amount, currency, locale)}</p>
+                  <p className="text-xs text-muted-foreground">{new Date(expense.date).toLocaleDateString(locale)}</p>
                 </div>
               </div>
             ))}
             {expenses.length === 0 && (
-              <p className="text-center text-muted-foreground py-8">No transactions yet</p>
+              <p className="text-center text-muted-foreground py-8">{getTranslation(locale, 'noTransactions')}</p>
             )}
           </div>
         </CardContent>
