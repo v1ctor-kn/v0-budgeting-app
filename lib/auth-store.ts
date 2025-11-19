@@ -7,36 +7,72 @@ interface User {
   email: string
 }
 
+interface StoredAccount {
+  id: string
+  name: string
+  email: string
+  password: string // In production, this would be hashed
+}
+
 interface AuthState {
   user: User | null
   isAuthenticated: boolean
-  login: (email: string, password: string) => void
-  register: (name: string, email: string, password: string) => void
+  accounts: StoredAccount[]
+  login: (email: string, password: string) => boolean
+  register: (name: string, email: string, password: string) => boolean
   logout: () => void
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
+      accounts: [],
       login: (email: string, password: string) => {
-        // Simple local authentication - in production, this would call an API
-        const user: User = {
-          id: Math.random().toString(36).substring(7),
-          name: email.split('@')[0],
-          email,
+        const { accounts } = get()
+        const account = accounts.find(
+          (acc) => acc.email === email && acc.password === password
+        )
+        
+        if (account) {
+          const user: User = {
+            id: account.id,
+            name: account.name,
+            email: account.email,
+          }
+          set({ user, isAuthenticated: true })
+          return true
         }
-        set({ user, isAuthenticated: true })
+        return false
       },
       register: (name: string, email: string, password: string) => {
-        // Simple local registration - in production, this would call an API
-        const user: User = {
+        const { accounts } = get()
+        
+        // Check if email already exists
+        if (accounts.some((acc) => acc.email === email)) {
+          return false
+        }
+        
+        const newAccount: StoredAccount = {
           id: Math.random().toString(36).substring(7),
           name,
           email,
+          password, // In production, this would be hashed
         }
-        set({ user, isAuthenticated: true })
+        
+        const user: User = {
+          id: newAccount.id,
+          name: newAccount.name,
+          email: newAccount.email,
+        }
+        
+        set({ 
+          accounts: [...accounts, newAccount],
+          user, 
+          isAuthenticated: true 
+        })
+        return true
       },
       logout: () => {
         set({ user: null, isAuthenticated: false })

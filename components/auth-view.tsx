@@ -6,22 +6,33 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Wallet } from 'lucide-react'
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Wallet, AlertCircle } from 'lucide-react'
 import { useAuthStore } from "@/lib/auth-store"
 
 export function AuthView() {
   const { login, register } = useAuthStore()
   const [loginForm, setLoginForm] = useState({ email: "", password: "" })
   const [registerForm, setRegisterForm] = useState({ name: "", email: "", password: "" })
+  const [loginError, setLoginError] = useState("")
+  const [registerError, setRegisterError] = useState("")
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    login(loginForm.email, loginForm.password)
+    setLoginError("")
+    const success = login(loginForm.email, loginForm.password)
+    if (!success) {
+      setLoginError("Invalid email or password. Please try again.")
+    }
   }
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault()
-    register(registerForm.name, registerForm.email, registerForm.password)
+    setRegisterError("")
+    const success = register(registerForm.name, registerForm.email, registerForm.password)
+    if (!success) {
+      setRegisterError("An account with this email already exists.")
+    }
   }
 
   return (
@@ -63,6 +74,12 @@ export function AuthView() {
 
               <TabsContent value="login">
                 <form onSubmit={handleLogin} className="space-y-4">
+                  {loginError && (
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{loginError}</AlertDescription>
+                    </Alert>
+                  )}
                   <div className="space-y-2">
                     <Label htmlFor="login-email">Email</Label>
                     <Input
@@ -93,6 +110,12 @@ export function AuthView() {
 
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
+                  {registerError && (
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{registerError}</AlertDescription>
+                    </Alert>
+                  )}
                   <div className="space-y-2">
                     <Label htmlFor="register-name">Full Name</Label>
                     <Input
