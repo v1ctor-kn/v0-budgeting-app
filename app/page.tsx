@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Wallet, TrendingUp, CreditCard, Target, PieChart, DollarSign, LogOut } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useAuthStore } from "@/lib/auth-store"
+import { ModeToggle } from "@/components/mode-toggle"
 
 export default function BudgetApp() {
   const [activeTab, setActiveTab] = useState("dashboard")
@@ -45,6 +46,7 @@ export default function BudgetApp() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
+                <ModeToggle />
                 <div className="text-right hidden sm:block">
                   <p className="text-sm font-medium">{user?.name}</p>
                   <p className="text-xs text-muted-foreground">{user?.email}</p>

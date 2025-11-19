@@ -31,8 +31,11 @@ export const useAuthStore = create<AuthState>()(
       accounts: [],
       login: (email: string, password: string) => {
         const { accounts } = get()
+        const normalizedEmail = email.trim().toLowerCase()
+        const trimmedPassword = password.trim()
+        
         const account = accounts.find(
-          (acc) => acc.email === email && acc.password === password
+          (acc) => acc.email.toLowerCase() === normalizedEmail && acc.password === trimmedPassword
         )
         
         if (account) {
@@ -48,17 +51,20 @@ export const useAuthStore = create<AuthState>()(
       },
       register: (name: string, email: string, password: string) => {
         const { accounts } = get()
+        const normalizedEmail = email.trim().toLowerCase()
+        const trimmedName = name.trim()
+        const trimmedPassword = password.trim()
         
         // Check if email already exists
-        if (accounts.some((acc) => acc.email === email)) {
+        if (accounts.some((acc) => acc.email.toLowerCase() === normalizedEmail)) {
           return false
         }
         
         const newAccount: StoredAccount = {
           id: Math.random().toString(36).substring(7),
-          name,
-          email,
-          password, // In production, this would be hashed
+          name: trimmedName,
+          email: normalizedEmail,
+          password: trimmedPassword,
         }
         
         const user: User = {
@@ -80,6 +86,11 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'budgetwise-auth-storage',
+      partialize: (state) => ({
+        accounts: state.accounts,
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 )

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Wallet, AlertCircle, TrendingUp, PieChart, Bell, ShieldCheck } from 'lucide-react'
+import { Wallet, AlertCircle, TrendingUp, PieChart, Bell, ShieldCheck, CheckCircle2 } from 'lucide-react'
 import { useAuthStore } from "@/lib/auth-store"
 
 export function AuthView() {
@@ -16,22 +16,26 @@ export function AuthView() {
   const [registerForm, setRegisterForm] = useState({ name: "", email: "", password: "" })
   const [loginError, setLoginError] = useState("")
   const [registerError, setRegisterError] = useState("")
+  const [registerSuccess, setRegisterSuccess] = useState(false)
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     setLoginError("")
-    const success = login(loginForm.email, loginForm.password)
+    const success = login(loginForm.email.trim(), loginForm.password.trim())
     if (!success) {
-      setLoginError("Invalid email or password. Please try again.")
+      setLoginError("Invalid email or password. Please check your credentials.")
     }
   }
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault()
     setRegisterError("")
-    const success = register(registerForm.name, registerForm.email, registerForm.password)
+    setRegisterSuccess(false)
+    const success = register(registerForm.name.trim(), registerForm.email.trim(), registerForm.password.trim())
     if (!success) {
-      setRegisterError("An account with this email already exists.")
+      setRegisterError("An account with this email already exists. Please sign in instead.")
+    } else {
+      setRegisterSuccess(true)
     }
   }
 
@@ -40,8 +44,8 @@ export function AuthView() {
       {/* Background image with overlay */}
       <div className="fixed inset-0 z-0">
         <img
-          src="/modern-financial-dashboard-with-charts-and-graphs-.jpg"
-          alt=""
+          src="/modern-bank-building-interior-architecture.jpg"
+          alt="Modern Bank Interior"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-background/90 backdrop-blur-sm" />
@@ -78,6 +82,12 @@ export function AuthView() {
                     <Alert variant="destructive">
                       <AlertCircle className="h-4 w-4" />
                       <AlertDescription>{loginError}</AlertDescription>
+                    </Alert>
+                  )}
+                  {registerSuccess && (
+                    <Alert className="border-success bg-success/10 text-success">
+                      <CheckCircle2 className="h-4 w-4" />
+                      <AlertDescription>Account created successfully! You are now logged in.</AlertDescription>
                     </Alert>
                   )}
                   <div className="space-y-2">
