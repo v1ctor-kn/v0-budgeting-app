@@ -41,34 +41,55 @@ export function DashboardView() {
       )}
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="relative overflow-hidden">
+          <div className="absolute inset-0 opacity-5">
+            <img
+              src="/upward-trending-financial-graph.jpg"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
             <CardTitle className="text-sm font-medium">Total Income</CardTitle>
             <TrendingUp className="h-4 w-4 text-success" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative z-10">
             <div className="text-2xl font-bold">${totalIncome.toFixed(2)}</div>
             <p className="text-xs text-muted-foreground">This month</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="relative overflow-hidden">
+          <div className="absolute inset-0 opacity-5">
+            <img
+              src="/downward-financial-chart-expenses.jpg"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
             <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
             <TrendingDown className="h-4 w-4 text-destructive" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative z-10">
             <div className="text-2xl font-bold">${totalExpenses.toFixed(2)}</div>
             <p className="text-xs text-muted-foreground">This month</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="relative overflow-hidden">
+          <div className="absolute inset-0 opacity-5">
+            <img
+              src="/money-wallet-balance-financial.jpg"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
             <CardTitle className="text-sm font-medium">Balance</CardTitle>
             <Wallet className="h-4 w-4 text-primary" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative z-10">
             <div className={`text-2xl font-bold ${balance >= 0 ? 'text-success' : 'text-destructive'}`}>
               ${balance.toFixed(2)}
             </div>
@@ -76,12 +97,19 @@ export function DashboardView() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="relative overflow-hidden">
+          <div className="absolute inset-0 opacity-5">
+            <img
+              src="/target-goal-achievement-savings.jpg"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
             <CardTitle className="text-sm font-medium">Total Savings</CardTitle>
             <Target className="h-4 w-4 text-accent" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative z-10">
             <div className="text-2xl font-bold">${totalSavings.toFixed(2)}</div>
             <p className="text-xs text-muted-foreground">{savingsGoals.length} active goals</p>
           </CardContent>
