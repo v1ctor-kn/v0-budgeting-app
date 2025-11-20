@@ -131,6 +131,10 @@ npm run dev
 Contributions, issues, and feature requests are welcome!
 Feel free to open a pull request or raise an issue.
 
----
+## 📄 Presentation & Documentation
+
+- **Project Presentation Slides:** [View Slides]([YOUR_LINK_HERE](https://www.canva.com/design/DAG5OKEj4Gs/ajUPmlTBSj4cTTJPgMekfw/edit?utm_content=DAG5OKEj4Gs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton))
+
+
 
 
