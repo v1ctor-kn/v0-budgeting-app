@@ -1,30 +1,136 @@
-# Budgeting app
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+**BudgetWise – Smart Personal Finance Management**
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/mwendavictor42-5199s-projects/v0-budgeting-app)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/lG2d1cGNt2e)
+BudgetWise is a modern, intuitive budgeting assistant designed to help users track their **income**, **expenses**, **savings**, and **overall financial health** with ease.
+With built-in **AI-powered insights**, BudgetWise guides users toward smarter money management and long-term financial stability.
 
-## Overview
+---
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## **Features**
 
-## Deployment
+** Dashboard Overview**
 
-Your project is live at:
+A clean and modern dashboard displaying:
 
-**[https://vercel.com/mwendavictor42-5199s-projects/v0-budgeting-app](https://vercel.com/mwendavictor42-5199s-projects/v0-budgeting-app)**
+* **Total Income**
+* **Total Expenses**
+* **Balance**
+* **Total Savings**
+* Quick visual indicators to help users understand their financial situation instantly.
 
-## Build your app
+---
 
-Continue building your app on:
+## 💰 **Income Management**
 
-**[https://v0.app/chat/lG2d1cGNt2e](https://v0.app/chat/lG2d1cGNt2e)**
+* Add one-time or recurring income sources
+* View your complete income history
+* Track monthly or yearly earnings
+* Intuitive UI for clean organization
+  (Example shown: User added a *loan* income of $20,000)
 
-## How It Works
+---
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## 🧾 **Expense Tracking**
+
+* Add expenses across various categories
+* View all your spending history in one place
+* Spending-by-category visualization
+* Helps users see where their money is going and control overspending
+
+---
+
+## 🎯 **Budgets & Savings**
+
+* Create and manage personal budgets
+* Define savings goals
+* Track progress toward each goal
+* Encourages disciplined financial planning
+
+---
+
+## 🤖 **AI Insights (Coming Soon / Currently in Beta)**
+
+BudgetWise includes an **AI Insights** section that analyzes:
+
+* Your spending habits
+* Income patterns
+* Savings progress
+* Monthly financial behavior
+
+The AI then offers **personalized recommendations** such as:
+
+* Where to reduce unnecessary costs
+* How much to safely save
+* Budget adjustments
+* Long-term financial planning tips
+
+Making BudgetWise not just a tracker—but a true **financial advisor**.
+
+---
+
+## 🛡️ **Authentication & Security**
+
+* Secure user authentication
+* Saves all personal finance data under your private account
+* Runs smoothly on Vercel for fast performance and reliability
+
+---
+
+## 🖥️ **Tech Stack**
+
+* **Frontend:** Next.js, React
+* **Backend:** ( Python, NextAuth, Supabase, etc.)
+* **Styling:** TailwindCSS
+* **Hosting:** Vercel
+* **Database:** Supabase / Prisma (if applicable)
+* **AI Integration:** Custom LLM API (planned or implemented)
+
+---
+
+## 📸 **Screenshots**
+
+### **Dashboard**
+
+*(Shows an overview of income, balance, expenses, and savings)*
+![Dashboard Screenshot](./Screenshot-313.png)
+
+### **Income Page**
+
+*(Displays total income and income history)*
+![Income Screenshot](./Screenshot-314.png)
+
+### **Expenses Page**
+
+*(Organized expense tracking and spending chart)*
+![Expenses Screenshot](./Screenshot-315.png)
+
+---
+
+## 📦 **Installation**
+
+git clone https://github.com/v1ctor-kn/v0-budgeting-app.git
+cd budgetwise
+npm install
+npm run dev
+
+
+
+## 🧭 **Roadmap**
+
+* [ ] AI-powered full financial analysis
+* [ ] Predictive budgeting
+* [ ] Currency support
+* [ ] Mobile version
+* [ ] Expense receipt scanning
+* [ ] Investment tracking
+
+---
+
+## 🤝 **Contributions**
+
+Contributions, issues, and feature requests are welcome!
+Feel free to open a pull request or raise an issue.
+
+---
+
+
