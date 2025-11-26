@@ -1,0 +1,241 @@
+import type { Transaction, Category, Budget, Prediction, Alert, Badge, Challenge, FinancialInsight } from "./types"
+
+export const categories: Category[] = [
+  { id: "1", name: "Food & Dining", icon: "🍽️", color: "chart-1", budget: 500 },
+  { id: "2", name: "Transportation", icon: "🚗", color: "chart-2", budget: 300 },
+  { id: "3", name: "Shopping", icon: "🛍️", color: "chart-3", budget: 400 },
+  { id: "4", name: "Entertainment", icon: "🎬", color: "chart-4", budget: 200 },
+  { id: "5", name: "Utilities", icon: "💡", color: "chart-5", budget: 250 },
+  { id: "6", name: "Healthcare", icon: "🏥", color: "chart-1", budget: 150 },
+  { id: "7", name: "Rent", icon: "🏠", color: "chart-2", budget: 1500 },
+  { id: "8", name: "Subscriptions", icon: "📱", color: "chart-3", budget: 100 },
+]
+
+export const transactions: Transaction[] = [
+  {
+    id: "1",
+    description: "Starbucks Coffee",
+    amount: 5.75,
+    date: "2024-01-15",
+    category: categories[0],
+    aiConfidence: 0.95,
+    isManuallySet: false,
+  },
+  {
+    id: "2",
+    description: "Uber ride to airport",
+    amount: 45.0,
+    date: "2024-01-15",
+    category: categories[1],
+    aiConfidence: 0.92,
+    isManuallySet: false,
+  },
+  {
+    id: "3",
+    description: "Amazon Prime renewal",
+    amount: 14.99,
+    date: "2024-01-14",
+    category: categories[7],
+    aiConfidence: 0.98,
+    isManuallySet: false,
+  },
+  {
+    id: "4",
+    description: "Whole Foods groceries",
+    amount: 127.43,
+    date: "2024-01-14",
+    category: categories[0],
+    aiConfidence: 0.89,
+    isManuallySet: false,
+  },
+  {
+    id: "5",
+    description: "Netflix subscription",
+    amount: 15.99,
+    date: "2024-01-13",
+    category: categories[7],
+    aiConfidence: 0.99,
+    isManuallySet: false,
+  },
+  {
+    id: "6",
+    description: "Gas station fill-up",
+    amount: 52.3,
+    date: "2024-01-13",
+    category: categories[1],
+    aiConfidence: 0.94,
+    isManuallySet: false,
+  },
+  {
+    id: "7",
+    description: "Electric bill payment",
+    amount: 145.0,
+    date: "2024-01-12",
+    category: categories[4],
+    aiConfidence: 0.97,
+    isManuallySet: false,
+  },
+  {
+    id: "8",
+    description: "Movie tickets - AMC",
+    amount: 32.0,
+    date: "2024-01-12",
+    category: categories[3],
+    aiConfidence: 0.91,
+    isManuallySet: false,
+  },
+  {
+    id: "9",
+    description: "Target shopping",
+    amount: 89.99,
+    date: "2024-01-11",
+    category: categories[2],
+    aiConfidence: 0.85,
+    isManuallySet: false,
+  },
+  {
+    id: "10",
+    description: "Chipotle lunch",
+    amount: 12.5,
+    date: "2024-01-11",
+    category: categories[0],
+    aiConfidence: 0.96,
+    isManuallySet: false,
+  },
+]
+
+export const budgets: Budget[] = categories.map((cat) => ({
+  category: cat,
+  allocated: cat.budget || 0,
+  spent: Math.floor(Math.random() * (cat.budget || 200) * 0.8),
+  aiRecommended: Math.floor((cat.budget || 0) * (0.9 + Math.random() * 0.2)),
+}))
+
+export const predictions: Prediction[] = [
+  { month: "Feb", predictedSpending: 2850, predictedSavings: 650, confidence: 0.87 },
+  { month: "Mar", predictedSpending: 2720, predictedSavings: 780, confidence: 0.82 },
+  { month: "Apr", predictedSpending: 2900, predictedSavings: 600, confidence: 0.78 },
+  { month: "May", predictedSpending: 2650, predictedSavings: 850, confidence: 0.74 },
+  { month: "Jun", predictedSpending: 2800, predictedSavings: 700, confidence: 0.7 },
+]
+
+export const alerts: Alert[] = [
+  {
+    id: "1",
+    type: "warning",
+    title: "Weekend Spending Pattern",
+    message: "AI detected 40% higher spending on weekends. Consider setting a weekend budget limit.",
+    isAiGenerated: true,
+    timestamp: "2024-01-15T10:30:00",
+    priority: 8,
+  },
+  {
+    id: "2",
+    type: "info",
+    title: "Savings Opportunity",
+    message: "Based on your patterns, switching to annual subscriptions could save you $120/year.",
+    isAiGenerated: true,
+    timestamp: "2024-01-15T09:00:00",
+    priority: 6,
+  },
+  {
+    id: "3",
+    type: "success",
+    title: "Budget Goal Met",
+    message: "Congratulations! You stayed under your entertainment budget this month.",
+    isAiGenerated: true,
+    timestamp: "2024-01-14T18:00:00",
+    priority: 4,
+  },
+  {
+    id: "4",
+    type: "danger",
+    title: "Food Budget Alert",
+    message: "You've used 85% of your food budget with 2 weeks remaining.",
+    isAiGenerated: true,
+    timestamp: "2024-01-14T12:00:00",
+    priority: 9,
+  },
+]
+
+export const badges: Badge[] = [
+  {
+    id: "1",
+    name: "First Saver",
+    description: "Saved your first $100",
+    icon: "🏆",
+    earnedAt: "2024-01-10",
+    progress: 100,
+    target: 100,
+  },
+  { id: "2", name: "Budget Master", description: "Stay under budget for 3 months", icon: "👑", progress: 2, target: 3 },
+  { id: "3", name: "Smart Spender", description: "Reduce spending by 10%", icon: "💡", progress: 7, target: 10 },
+  { id: "4", name: "Goal Getter", description: "Complete 5 savings challenges", icon: "🎯", progress: 3, target: 5 },
+  { id: "5", name: "AI Explorer", description: "Use AI insights 50 times", icon: "🤖", progress: 28, target: 50 },
+]
+
+export const challenges: Challenge[] = [
+  {
+    id: "1",
+    title: "No-Spend Weekend",
+    description: "Go the entire weekend without non-essential spending",
+    target: 2,
+    current: 1,
+    deadline: "2024-01-21",
+    reward: "50 points",
+    isAiGenerated: true,
+  },
+  {
+    id: "2",
+    title: "Coffee at Home",
+    description: "Make coffee at home instead of buying for a week",
+    target: 7,
+    current: 4,
+    deadline: "2024-01-22",
+    reward: "30 points + $25 saved",
+    isAiGenerated: true,
+  },
+  {
+    id: "3",
+    title: "Save 5% More",
+    description: "Increase your savings rate by 5% this month",
+    target: 5,
+    current: 3.2,
+    deadline: "2024-01-31",
+    reward: "100 points",
+    isAiGenerated: true,
+  },
+]
+
+export const insights: FinancialInsight[] = [
+  {
+    id: "1",
+    type: "saving",
+    title: "Subscription Optimization",
+    description: "You have 3 streaming services. Consider bundling or rotating to save $20/month.",
+    impact: 240,
+    confidence: 0.92,
+  },
+  {
+    id: "2",
+    type: "spending",
+    title: "Dining Pattern",
+    description: "Your dining expenses peak on Fridays. Planning meals could reduce this by 25%.",
+    impact: 150,
+    confidence: 0.88,
+  },
+  {
+    id: "3",
+    type: "tip",
+    title: "Emergency Fund",
+    description: "Based on your income, aim for $5,000 in emergency savings. You're 60% there!",
+    confidence: 0.95,
+  },
+  {
+    id: "4",
+    type: "alert",
+    title: "Unusual Transaction",
+    description: "A $299 charge doesn't match your typical patterns. Please verify.",
+    confidence: 0.78,
+  },
+]
